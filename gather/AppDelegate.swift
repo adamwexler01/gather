@@ -8,16 +8,21 @@
 
 import UIKit
 import CoreData
+import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        return true
+
+        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String, annotation: AnyObject?) -> Bool {
+        return FBAppCall.handleOpenURL(url, sourceApplication: options["UIApplicationOpenURLOptionsSourceApplicationKey"] as! String)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
