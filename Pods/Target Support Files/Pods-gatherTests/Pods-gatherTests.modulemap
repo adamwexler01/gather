@@ -1,0 +1,6 @@
+framework module Pods_gatherTests {
+  umbrella header "Pods-gatherTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
