@@ -17,11 +17,17 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        let button = FBSDKLoginButton()
-        button.sizeThatFits(CGSize(width: CGFloat(100), height: CGFloat(50)))
-        button.center = self.view.center;
-        self.view.addSubview(button)
+
+        if (FBSDKAccessToken.current()) != nil {
+            //User already has access to the api/connected to facebook
+            //So we can just generate the account information from
+            //the facebook api
+        } else {
+            let button = FBSDKLoginButton()
+            button.sizeThatFits(CGSize(width: CGFloat(100), height: CGFloat(50)))
+            button.center = self.view.center;
+            self.view.addSubview(button)
+        }
         
     }
 
