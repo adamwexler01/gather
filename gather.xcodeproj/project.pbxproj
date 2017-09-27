@@ -15,6 +15,10 @@
 		51DA2ACF1F7964BE001B0D86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51DA2ACD1F7964BE001B0D86 /* LaunchScreen.storyboard */; };
 		51DA2ADA1F7964BE001B0D86 /* gatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DA2AD91F7964BE001B0D86 /* gatherTests.swift */; };
 		51DA2AE51F7964BE001B0D86 /* gatherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DA2AE41F7964BE001B0D86 /* gatherUITests.swift */; };
+		51EC3EA61F7C0ECE0021BDBD /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51EC3EA41F7C0ECE0021BDBD /* FBSDKCoreKit.framework */; };
+		51EC3EA71F7C0ECE0021BDBD /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51EC3EA51F7C0ECE0021BDBD /* FBSDKLoginKit.framework */; };
+		51EC3EA91F7C0ED30021BDBD /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51EC3EA81F7C0ED30021BDBD /* FBSDKShareKit.framework */; };
+		51EC3EAB1F7C0ED60021BDBD /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51EC3EAA1F7C0ED60021BDBD /* Bolts.framework */; };
 		6CB7F2418E048B76F574A837 /* Pods_gather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD5EBDBF3C5E1942B6866EB2 /* Pods_gather.framework */; };
 		9F7660A3B3A8DC2E31DBB6B3 /* Pods_gatherUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E04CEE786943DA514AEF4B4 /* Pods_gatherUITests.framework */; };
 		B8F28F253BD7BC57739A50E2 /* Pods_gatherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 306849024EC76579810D3A10 /* Pods_gatherTests.framework */; };
@@ -53,6 +57,10 @@
 		51DA2AE01F7964BE001B0D86 /* gatherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = gatherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		51DA2AE41F7964BE001B0D86 /* gatherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gatherUITests.swift; sourceTree = "<group>"; };
 		51DA2AE61F7964BE001B0D86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		51EC3EA41F7C0ECE0021BDBD /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../../Library/Developer/Xcode/DerivedData/gather-envhjbnueozcfggyljezguogylyg/Build/Products/Debug-iphonesimulator/FBSDKCoreKit/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
+		51EC3EA51F7C0ECE0021BDBD /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../Library/Developer/Xcode/DerivedData/gather-envhjbnueozcfggyljezguogylyg/Build/Products/Debug-iphonesimulator/FBSDKLoginKit/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
+		51EC3EA81F7C0ED30021BDBD /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = "../../Library/Developer/Xcode/DerivedData/gather-envhjbnueozcfggyljezguogylyg/Build/Products/Debug-iphonesimulator/FBSDKShareKit/FBSDKShareKit.framework"; sourceTree = "<group>"; };
+		51EC3EAA1F7C0ED60021BDBD /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "../../Library/Developer/Xcode/DerivedData/gather-envhjbnueozcfggyljezguogylyg/Build/Products/Debug-iphonesimulator/Bolts/Bolts.framework"; sourceTree = "<group>"; };
 		6B639BD2E6232C1CA149DBFC /* Pods-gatherTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gatherTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-gatherTests/Pods-gatherTests.debug.xcconfig"; sourceTree = "<group>"; };
 		88676363F90AD4AB29CFFD80 /* Pods-gather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gather.release.xcconfig"; path = "Pods/Target Support Files/Pods-gather/Pods-gather.release.xcconfig"; sourceTree = "<group>"; };
 		8E04CEE786943DA514AEF4B4 /* Pods_gatherUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_gatherUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +76,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51EC3EAB1F7C0ED60021BDBD /* Bolts.framework in Frameworks */,
+				51EC3EA91F7C0ED30021BDBD /* FBSDKShareKit.framework in Frameworks */,
+				51EC3EA61F7C0ECE0021BDBD /* FBSDKCoreKit.framework in Frameworks */,
+				51EC3EA71F7C0ECE0021BDBD /* FBSDKLoginKit.framework in Frameworks */,
 				6CB7F2418E048B76F574A837 /* Pods_gather.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -94,6 +106,10 @@
 		4CD31C7EE853E6A48FB90EEB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				51EC3EAA1F7C0ED60021BDBD /* Bolts.framework */,
+				51EC3EA81F7C0ED30021BDBD /* FBSDKShareKit.framework */,
+				51EC3EA41F7C0ECE0021BDBD /* FBSDKCoreKit.framework */,
+				51EC3EA51F7C0ECE0021BDBD /* FBSDKLoginKit.framework */,
 				FD5EBDBF3C5E1942B6866EB2 /* Pods_gather.framework */,
 				306849024EC76579810D3A10 /* Pods_gatherTests.framework */,
 				8E04CEE786943DA514AEF4B4 /* Pods_gatherUITests.framework */,
@@ -731,6 +747,7 @@
 				51DA2AEB1F7964BE001B0D86 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		51DA2AEC1F7964BE001B0D86 /* Build configuration list for PBXNativeTarget "gatherTests" */ = {
 			isa = XCConfigurationList;
@@ -739,6 +756,7 @@
 				51DA2AEE1F7964BE001B0D86 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		51DA2AEF1F7964BE001B0D86 /* Build configuration list for PBXNativeTarget "gatherUITests" */ = {
 			isa = XCConfigurationList;
@@ -747,6 +765,7 @@
 				51DA2AF11F7964BE001B0D86 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
