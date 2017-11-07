@@ -11,18 +11,40 @@ import CoreData
 import FBSDKCoreKit
 import FBSDKLoginKit
 import FBSDKShareKit
+import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    let appWindow = UIWindow(frame: UIScreen.main.bounds)
+    lazy var appCoordinator: AppCoordinator = AppCoordinator(window: self.appWindow)
+
 
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+
+        GMSServices.provideAPIKey("AIzaSyC6haqEdYhqtVGiqQknf201VMR8lhK0P0w")
+        
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        appWindow.makeKeyAndVisible()
+        window = appWindow
+        
+        appCoordinator.start()
+        
+        
+        
+        
+        return true
+        
+        
+
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
         FBSDKAppEvents.activateApp()
+        UserDefaults.standard.synchronize()
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
@@ -30,8 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        UserDefaults.standard.synchronize()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -43,8 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        // Saves changes in the application's managed object context before the application terminates.
+        UserDefaults.standard.synchronize()
         self.saveContext()
     }
 

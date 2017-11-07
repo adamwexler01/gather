@@ -10,62 +10,72 @@ import UIKit
 import FBSDKLoginKit
 import FBSDKShareKit
 import FBSDKCoreKit
+import GoogleMaps
+import GooglePlaces
+import ChameleonFramework
+
+protocol ViewControllerDelegate: class {
+    func controller(_ controller: ViewController, didCompleteWithResult result: FBSDKLoginManagerLoginResult?, error: Error?)
+}
 
 class ViewController: UIViewController {
-
+    
+    public weak var delegate: ViewControllerDelegate?
+    
+    init(delegate: ViewControllerDelegate) {
+        self.delegate = delegate
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-
-        if (FBSDKAccessToken.current()) != nil {
-            //User already has access to the api/connected to facebook
-            //So we can just generate the account information from
-            //the facebook api
-            loginFBData()
-            referenceFBData()
-            
-        } else {
-            let button = FBSDKLoginButton()
-            button.sizeThatFits(CGSize(width: CGFloat(100), height: CGFloat(50)))
-            button.center = CGPoint(x: self.view.frame.midX, y: self.view.frame.size.height*9/10)
-            self.view.addSubview(button)
-        }
         
+        let button = FBSDKLoginButton()
+        button.delegate = self
+        
+        let backgroundColor = UIColor.flatYellow()
+        
+        button.sizeThatFits(CGSize(width: CGFloat(100), height: CGFloat(50)))
+        button.center = CGPoint(x: self.view.frame.midX, y: self.view.frame.size.height*9/10)
+        
+        self.view.backgroundColor = backgroundColor
+        self.view.addSubview(button)        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    func referenceFBData() {
-        let request = FBSDKGraphRequest(graphPath:"me", parameters: ["fields":"email,first_name,gender"]);
+    
+    func testLoginFunction(){
+        let button = FBSDKLoginButton()
+        button.readPermissions = ["public_profile", "email", "user_friends"]
+        let backgroundColor = UIColor.flatYellow()
         
-        request?.start(completionHandler: { (connection, result, error) in
-            if(error != nil){
-                print("This is the result that you are looking for: \(String(describing: result))")
-            } else {
-                print("This is the seen error: \(String(describing: error))")
-            }
-        })
+        button.sizeThatFits(CGSize(width: CGFloat(100), height: CGFloat(50)))
+        button.center = CGPoint(x: self.view.frame.midX, y: self.view.frame.size.height*9/10)
+        
+        self.view.backgroundColor = backgroundColor
+        self.view.addSubview(button)
     }
     
-    func loginFBData(){
-        let faceBookLoginManger = FBSDKLoginManager()
-        
-        faceBookLoginManger.logIn(withReadPermissions: ["public_profile", "email", "user_friends"], from: self) { (result, error) in
-            if (error != nil)
-            {
-                print("error is \(error)")
-            }
-            if (result?.isCancelled)!
-            {
-                //handle cancelations
-            }
+}
 
-        }
+extension ViewController: FBSDKLoginButtonDelegate {
+    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+        delegate?.controller(self, didCompleteWithResult: result, error: error)
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
         
+    }
+    
+    func loginButtonWillLogin(_ loginButton: FBSDKLoginButton!) -> Bool {
+        return true
     }
 }
 

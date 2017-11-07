@@ -10,6 +10,9 @@ target 'gather' do
   pod 'FBSDKCoreKit', '~> 4.26'
   pod 'FBSDKLoginKit', '~> 4.26'
   pod 'FBSDKShareKit', '~> 4.26'
+  pod 'GoogleMaps', '~> 2.5'
+  pod 'GooglePlaces', '~> 2.5'
+  pod 'ChameleonFramework', '~> 2.1'
 
   target 'gatherTests' do
     inherit! :search_paths

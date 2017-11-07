@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		51B537531FB1471100C293BE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B537521FB1471100C293BE /* MapViewController.swift */; };
+		51B537551FB2298600C293BE /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B537541FB2298600C293BE /* AppCoordinator.swift */; };
 		51DA2AC21F7964BE001B0D86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DA2AC11F7964BE001B0D86 /* AppDelegate.swift */; };
 		51DA2AC41F7964BE001B0D86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DA2AC31F7964BE001B0D86 /* ViewController.swift */; };
-		51DA2AC71F7964BE001B0D86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51DA2AC51F7964BE001B0D86 /* Main.storyboard */; };
 		51DA2ACA1F7964BE001B0D86 /* gather.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 51DA2AC81F7964BE001B0D86 /* gather.xcdatamodeld */; };
 		51DA2ACC1F7964BE001B0D86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51DA2ACB1F7964BE001B0D86 /* Assets.xcassets */; };
 		51DA2ACF1F7964BE001B0D86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51DA2ACD1F7964BE001B0D86 /* LaunchScreen.storyboard */; };
@@ -43,10 +44,11 @@
 
 /* Begin PBXFileReference section */
 		306849024EC76579810D3A10 /* Pods_gatherTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_gatherTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		51B537521FB1471100C293BE /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		51B537541FB2298600C293BE /* AppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		51DA2ABE1F7964BE001B0D86 /* gather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51DA2AC11F7964BE001B0D86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		51DA2AC31F7964BE001B0D86 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		51DA2AC61F7964BE001B0D86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		51DA2AC91F7964BE001B0D86 /* gather.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = gather.xcdatamodel; sourceTree = "<group>"; };
 		51DA2ACB1F7964BE001B0D86 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		51DA2ACE1F7964BE001B0D86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -142,9 +144,10 @@
 		51DA2AC01F7964BE001B0D86 /* gather */ = {
 			isa = PBXGroup;
 			children = (
+				51B537521FB1471100C293BE /* MapViewController.swift */,
 				51DA2AC11F7964BE001B0D86 /* AppDelegate.swift */,
+				51B537541FB2298600C293BE /* AppCoordinator.swift */,
 				51DA2AC31F7964BE001B0D86 /* ViewController.swift */,
-				51DA2AC51F7964BE001B0D86 /* Main.storyboard */,
 				51DA2ACB1F7964BE001B0D86 /* Assets.xcassets */,
 				51DA2ACD1F7964BE001B0D86 /* LaunchScreen.storyboard */,
 				51DA2AD01F7964BE001B0D86 /* Info.plist */,
@@ -305,7 +308,6 @@
 			files = (
 				51DA2ACF1F7964BE001B0D86 /* LaunchScreen.storyboard in Resources */,
 				51DA2ACC1F7964BE001B0D86 /* Assets.xcassets in Resources */,
-				51DA2AC71F7964BE001B0D86 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,9 +334,13 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-gather/Pods-gather-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -364,6 +370,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-gather/Pods-gather-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
@@ -371,6 +378,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
@@ -488,7 +496,9 @@
 			files = (
 				51DA2AC41F7964BE001B0D86 /* ViewController.swift in Sources */,
 				51DA2AC21F7964BE001B0D86 /* AppDelegate.swift in Sources */,
+				51B537551FB2298600C293BE /* AppCoordinator.swift in Sources */,
 				51DA2ACA1F7964BE001B0D86 /* gather.xcdatamodeld in Sources */,
+				51B537531FB1471100C293BE /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,14 +534,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		51DA2AC51F7964BE001B0D86 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				51DA2AC61F7964BE001B0D86 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		51DA2ACD1F7964BE001B0D86 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -643,11 +645,14 @@
 			baseConfigurationReference = FBC2261DF4C4E3F670F9E6DB /* Pods-gather.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 4XDV86TPTB;
 				INFOPLIST_FILE = gather/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apwex.gather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -657,11 +662,14 @@
 			baseConfigurationReference = 88676363F90AD4AB29CFFD80 /* Pods-gather.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 4XDV86TPTB;
 				INFOPLIST_FILE = gather/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apwex.gather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

@@ -22,8 +22,6 @@
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -54,23 +52,9 @@
 	<string>346701352401945</string>
 	<key>FacebookDisplayName</key>
 	<string>gather</string>
-
-	<key>CFBundleURLTypes</key>
+	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fb346701352401945</string>
-			</array>
-		</dict>
+		<string>fbauth2</string>
 	</array>
-	<key>FacebookAppID</key>
-	<string>346701352401945</string>
-	<key>FacebookDisplayName</key>
-	<string>gather</string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>fbauth2</string>
-    </array>
 </dict>
 </plist>
