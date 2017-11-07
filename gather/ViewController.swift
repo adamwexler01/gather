@@ -33,6 +33,25 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+<<<<<<< HEAD
+=======
+        // Do any additional setup after loading the view, typically from a nib.
+
+        if (FBSDKAccessToken.current()) != nil {
+            //User already has access to the api/connected to facebook
+            //So we can just generate the account information from
+            //the facebook api
+            loginFBData()
+//            referenceFBData()
+            getLocationIDs()
+            
+        } else {
+            let button = FBSDKLoginButton()
+            button.sizeThatFits(CGSize(width: CGFloat(100), height: CGFloat(50)))
+            button.center = CGPoint(x: self.view.frame.midX, y: self.view.frame.size.height*9/10)
+            self.view.addSubview(button)
+        }
+>>>>>>> 2a2f72247a57d29d0d141666a9d794e628cf09a9
         
         let button = FBSDKLoginButton()
         button.delegate = self
@@ -65,17 +84,38 @@ class ViewController: UIViewController {
     
 }
 
+<<<<<<< HEAD
 extension ViewController: FBSDKLoginButtonDelegate {
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
         delegate?.controller(self, didCompleteWithResult: result, error: error)
     }
     
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+=======
+        }
+    }
+    
+    func getLocationIDs(){
+>>>>>>> 2a2f72247a57d29d0d141666a9d794e628cf09a9
         
+       
+        FBSDKGraphRequest(graphPath: "/search", parameters: ["pretty": "0", "type": "place", "center": "29.651634,-82.324829", "distance": "100", "limit": "25", "fields": "id"], httpMethod: "GET").start(completionHandler: { (connection, result, error) -> Void in
+            if (error == nil){
+                FBSDKGraphRequest(graphPath: "/events", parameters: ["ids": "141820976001317, 107173749306996, 1429754323987109"], httpMethod: "GET").start(completionHandler: { (connection, result, error) -> Void in
+                    if (error == nil){
+                        print(result as Any)
+                    }
+                })
+                
+            } else{
+                print("error is \(error)")
+            }
+        })
     }
     
     func loginButtonWillLogin(_ loginButton: FBSDKLoginButton!) -> Bool {
         return true
     }
 }
+
 
