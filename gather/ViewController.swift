@@ -62,7 +62,6 @@ class ViewController: UIViewController {
         self.view.backgroundColor = backgroundColor
         self.view.addSubview(button)
     }
-    
 }
 
 extension ViewController: FBSDKLoginButtonDelegate {
