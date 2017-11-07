@@ -33,13 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appCoordinator.start()
         
-        
-        
-        
         return true
         
-        
-
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
