@@ -261,7 +261,7 @@
 				TargetAttributes = {
 					51DA2ABD1F7964BE001B0D86 = {
 						CreatedOnToolsVersion = 8.3;
-						DevelopmentTeam = 4XDV86TPTB;
+						DevelopmentTeam = CQ38NKL4MF;
 						ProvisioningStyle = Automatic;
 					};
 					51DA2AD41F7964BE001B0D86 = {
@@ -643,10 +643,10 @@
 			baseConfigurationReference = FBC2261DF4C4E3F670F9E6DB /* Pods-gather.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4XDV86TPTB;
+				DEVELOPMENT_TEAM = CQ38NKL4MF;
 				INFOPLIST_FILE = gather/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.apwex.gather;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tae.gather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -657,10 +657,10 @@
 			baseConfigurationReference = 88676363F90AD4AB29CFFD80 /* Pods-gather.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4XDV86TPTB;
+				DEVELOPMENT_TEAM = CQ38NKL4MF;
 				INFOPLIST_FILE = gather/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.apwex.gather;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tae.gather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

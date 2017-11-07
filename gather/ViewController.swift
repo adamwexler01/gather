@@ -23,7 +23,8 @@ class ViewController: UIViewController {
             //So we can just generate the account information from
             //the facebook api
             loginFBData()
-            referenceFBData()
+//            referenceFBData()
+            getLocationIDs()
             
         } else {
             let button = FBSDKLoginButton()
@@ -65,7 +66,24 @@ class ViewController: UIViewController {
             }
 
         }
+    }
+    
+    func getLocationIDs(){
         
+       
+        FBSDKGraphRequest(graphPath: "/search", parameters: ["pretty": "0", "type": "place", "center": "29.651634,-82.324829", "distance": "100", "limit": "25", "fields": "id"], httpMethod: "GET").start(completionHandler: { (connection, result, error) -> Void in
+            if (error == nil){
+                FBSDKGraphRequest(graphPath: "/events", parameters: ["ids": "141820976001317, 107173749306996, 1429754323987109"], httpMethod: "GET").start(completionHandler: { (connection, result, error) -> Void in
+                    if (error == nil){
+                        print(result as Any)
+                    }
+                })
+                
+            } else{
+                print("error is \(error)")
+            }
+        })
     }
 }
+
 
