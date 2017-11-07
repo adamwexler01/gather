@@ -36,14 +36,25 @@ class ViewController: UIViewController {
         
         let button = FBSDKLoginButton()
         button.delegate = self
+        var logoView = UIImageView()
         
-        let backgroundColor = UIColor.flatYellow()
+        if let image = UIImage(named:"logo_1"){
+            //logoView.image = image
+            //logoView.frame(forAlignmentRect: CGRect(x: UIScreen.main.bounds.midX/8, y: UIScreen.main.bounds.midY/8, width: 25.0, height: 25.0))
+            logoView = UIImageView(image: image)
+            logoView.frame = CGRect(x: UIScreen.main.bounds.midX/2, y: UIScreen.main.bounds.midY/3, width: 200.0, height: 200.0)
+        }
+        
+        
+        let backgroundColor = UIColor.init(gradientStyle: .leftToRight, withFrame: UIScreen.main.bounds, andColors: [UIColor.flatMint(), UIColor.flatMintColorDark()])
         
         button.sizeThatFits(CGSize(width: CGFloat(100), height: CGFloat(50)))
         button.center = CGPoint(x: self.view.frame.midX, y: self.view.frame.size.height*9/10)
         
         self.view.backgroundColor = backgroundColor
-        self.view.addSubview(button)        
+        self.view.addSubview(button)
+        
+        view.addSubview(logoView)
     }
 
     override func didReceiveMemoryWarning() {
