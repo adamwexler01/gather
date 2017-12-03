@@ -12,7 +12,7 @@ import FBSDKShareKit
 import FBSDKCoreKit
 import GoogleMaps
 import GooglePlaces
-
+import Unbox
 
 protocol MapViewControllerDelegate: class {
     func controllerDidPressLogoutButton(_ controller: MapViewController)
@@ -21,6 +21,9 @@ protocol MapViewControllerDelegate: class {
 class MapViewController: UIViewController {
     
     public weak var delegate: MapViewControllerDelegate?
+    
+    let camera = GMSCameraPosition.camera(withLatitude: 29.6516, longitude: -82.3248, zoom: 12.5)
+    lazy var mapView: GMSMapView = GMSMapView.map(withFrame: CGRect.zero, camera: self.camera)
 
     init(delegate: MapViewControllerDelegate) {
         self.delegate = delegate
@@ -39,9 +42,8 @@ class MapViewController: UIViewController {
         navigationItem.rightBarButtonItem = logoutButton
         
         referenceFBData()
-        getLocationIDs()
-        let camera = GMSCameraPosition.camera(withLatitude: 29.6516, longitude: -82.3248, zoom: 15.0)
-        let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+        let mapData = getLocationIDs()
+        print(mapData)
         self.view = mapView
     }
     
@@ -66,9 +68,14 @@ class MapViewController: UIViewController {
             }
         })
     }
-    func getLocationIDs(){
-        FBSDKGraphRequest(graphPath: "/search", parameters: ["pretty": "0", "type": "place", "center": "29.651634,-82.324829", "distance": "45000", "limit": "100", "fields": "id"], httpMethod: "GET").start(completionHandler: { (connection, result, error) -> Void in
-            if (error == nil){
+    func getLocationIDs() {
+        
+        FBSDKGraphRequest(graphPath: "/search", parameters: ["pretty": "0", "type": "place", "center": "29.651634,-82.324829", "distance": "45000", "limit": "100", "fields": "id"], httpMethod: "GET").start(completionHandler: { [weak self] (connection, result, error) -> Void in
+            guard let `self` = self else { return }
+            
+            if let error = error {
+                self.handleError(error)
+            } else {
                 //print(result)
                 let placeDict = result as! NSDictionary
                 let placeIDs = placeDict.object(forKey: "data") as! NSArray
@@ -85,46 +92,130 @@ class MapViewController: UIViewController {
                 let stringIDs = ids.joined(separator: ", ")
                 var parametersForPlaces = [String: Any]()
                 parametersForPlaces["ids"] = stringIDs
-                FBSDKGraphRequest(graphPath: "/events", parameters: parametersForPlaces, httpMethod: "GET").start(completionHandler: { (connection, result, error) -> Void in
-                    if (error == nil){
-                        let resultDict = result as! NSDictionary
-                        for key in resultDict.allKeys {
-                            let stringKey = key as! String
-                            if (resultDict.object(forKey: stringKey) != nil){
-                                let testDict = resultDict.object(forKey: stringKey) as! NSDictionary
-                                let data = testDict.object(forKey: "data") as! NSArray
-                                print(data)
-                                
-                                let originalDateFormatter = DateFormatter()
-                                originalDateFormatter.dateFormat = "yyyy-MM-dd"
-                                
-//                                let fixedDateFormatter = DateFormatter()
-//                                fixedDateFormatter.dateFormat = "MMM dd,yyyy"
-                                
-//                                if(data.count > 0){
-//                                    let startDate =
-//                                    let name1 = (data[0] as AnyObject).object(forKey: "name") as! String
-//                                    print(name1)
-//                                }
-                                for dts in data {
-                                    var startTime = (dts as AnyObject).object(forKey: "start_time") as! String
-                                    startTime = originalDateFormatter.string(from: startTime)
-                                    let name = (dts as AnyObject).object(forKey: "name") as! String
-                                    print(name)
-                                }
-                            }
-                        }
-//                        var testDict = resultDict.object(forKey: "107173749306996") as! NSDictionary
-//                        //print(result as Any)
-//                        var data = testDict.object(forKey: "data") as! NSArray
-//                        let name = (data.object(at: 0) as AnyObject).object(forKey: "name") as! String
-//                        print(name)
-                    }
-                })
                 
-            } else{
-                print("error is \(error)")
+                self.getEvents(parameters: parametersForPlaces)
             }
         })
     }
+    
+    func getEvents(parameters: [String: Any]) {
+
+        FBSDKGraphRequest(graphPath: "/events", parameters: parameters, httpMethod: "GET").start(completionHandler: { [weak self] (connection, result, error) -> Void in
+            
+            guard let `self` = self else { return }
+            
+            if let error = error {
+                
+                DispatchQueue.main.async { [weak self] in
+                    guard let `self` = self else { return }
+                    self.handleError(error)
+                }
+
+                return
+            }
+            
+            guard let resultDict = result as? UnboxableDictionary else {
+                return
+            }
+            
+            let eventsArrays = resultDict.map { (arg) -> [Event] in
+                let (_, value) = arg
+                let placeDict = value as? [String: Any] ?? [:]
+                let eventDicts = placeDict["data"] as? [[String: Any]]
+                let events: [Event]? = try? unbox(dictionaries: eventDicts ?? [])
+                return events ?? []
+            }
+            
+            let events = eventsArrays.flatMap { $0 }
+            
+            
+            
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let `self` = self else { return }
+                self.handleResponse(events)
+            }
+        })
+    }
+    
+    func handleResponse(_ events: [Event]) {
+        
+        let currentDate = Date()
+//        let events = response.events
+//
+//        print(events)
+        
+        let filteredEvents = events.filter { $0.startTime?.compare(currentDate) == .orderedDescending }
+        
+        
+        for event in filteredEvents {
+            let marker = GMSMarker()
+            marker.position = CLLocationCoordinate2D(latitude: event.place.location.latitude, longitude: event.place.location.longitude)
+            marker.title = event.name
+            marker.snippet = event.description
+            marker.map = mapView
+            print(event.name)
+            print(event.place.location.latitude)
+            print(event.place.location.longitude)
+        }
+        
+    }
+    
+    func handleError(_ error: Error) {
+        print(error)
+    }
 }
+
+struct Place: Unboxable {
+    
+    // name
+    let location: Location
+    
+    init(unboxer: Unboxer) throws {
+        location = try unboxer.unbox(key: "location")
+    }
+}
+
+struct Location: Unboxable {
+    
+    let latitude: Double
+    let longitude: Double
+
+    init(unboxer: Unboxer) throws {
+        latitude = try unboxer.unbox(key: "latitude")
+        longitude = try unboxer.unbox(key: "longitude")
+    }
+}
+struct Event: Unboxable {
+    
+    let name: String?
+    let startTime: Date?
+    let date: Date?
+    let description: String?
+    let place: Place
+
+    init(unboxer: Unboxer) throws {
+
+        place = try unboxer.unbox(key: "place")
+        startTime = try? unboxer.unbox(key: "start_time", formatter: DateFormatter.originalDateFormatter)
+        name = try? unboxer.unbox(key: "name")
+        date = try? unboxer.unbox(key: "date", formatter: DateFormatter.fixedDateFormatter)
+        description = try? unboxer.unbox(key: "description")
+    }
+}
+
+
+extension DateFormatter {
+    static var originalDateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss-SSSS"
+        return formatter
+    }
+    
+    static var fixedDateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM dd,yyyy - 'START TIME-' HH:mm"
+        return formatter
+    }
+}
+

@@ -13,6 +13,7 @@ target 'gather' do
   pod 'GoogleMaps', '~> 2.5'
   pod 'GooglePlaces', '~> 2.5'
   pod 'ChameleonFramework', '~> 2.1'
+  pod 'Unbox'
 
   target 'gatherTests' do
     inherit! :search_paths
