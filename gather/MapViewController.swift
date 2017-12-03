@@ -43,13 +43,6 @@ class MapViewController: UIViewController {
         let camera = GMSCameraPosition.camera(withLatitude: 29.6516, longitude: -82.3248, zoom: 15.0)
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         self.view = mapView
-        
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: 29.6516, longitude: -82.3248)
-        marker.title = "Gainesville"
-        marker.snippet = "Florida, USA"
-        marker.map = mapView
-        
     }
     
 
@@ -74,11 +67,58 @@ class MapViewController: UIViewController {
         })
     }
     func getLocationIDs(){
-        FBSDKGraphRequest(graphPath: "/search", parameters: ["pretty": "0", "type": "place", "center": "29.651634,-82.324829", "distance": "100", "limit": "25", "fields": "id"], httpMethod: "GET").start(completionHandler: { (connection, result, error) -> Void in
+        FBSDKGraphRequest(graphPath: "/search", parameters: ["pretty": "0", "type": "place", "center": "29.651634,-82.324829", "distance": "45000", "limit": "100", "fields": "id"], httpMethod: "GET").start(completionHandler: { (connection, result, error) -> Void in
             if (error == nil){
-                FBSDKGraphRequest(graphPath: "/events", parameters: ["ids": "141820976001317, 107173749306996, 1429754323987109"], httpMethod: "GET").start(completionHandler: { (connection, result, error) -> Void in
+                //print(result)
+                let placeDict = result as! NSDictionary
+                let placeIDs = placeDict.object(forKey: "data") as! NSArray
+                var ids = [String]()
+                var count = 0
+                for singleDictEntry in placeIDs{
+                    if(count < 49){
+                        ids.append((singleDictEntry as AnyObject).object(forKey: "id") as! String)
+                        count += 1
+                    } else{
+                        break
+                    }
+                }
+                let stringIDs = ids.joined(separator: ", ")
+                var parametersForPlaces = [String: Any]()
+                parametersForPlaces["ids"] = stringIDs
+                FBSDKGraphRequest(graphPath: "/events", parameters: parametersForPlaces, httpMethod: "GET").start(completionHandler: { (connection, result, error) -> Void in
                     if (error == nil){
-                        print(result as Any)
+                        let resultDict = result as! NSDictionary
+                        for key in resultDict.allKeys {
+                            let stringKey = key as! String
+                            if (resultDict.object(forKey: stringKey) != nil){
+                                let testDict = resultDict.object(forKey: stringKey) as! NSDictionary
+                                let data = testDict.object(forKey: "data") as! NSArray
+                                print(data)
+                                
+                                let originalDateFormatter = DateFormatter()
+                                originalDateFormatter.dateFormat = "yyyy-MM-dd"
+                                
+//                                let fixedDateFormatter = DateFormatter()
+//                                fixedDateFormatter.dateFormat = "MMM dd,yyyy"
+                                
+//                                if(data.count > 0){
+//                                    let startDate =
+//                                    let name1 = (data[0] as AnyObject).object(forKey: "name") as! String
+//                                    print(name1)
+//                                }
+                                for dts in data {
+                                    var startTime = (dts as AnyObject).object(forKey: "start_time") as! String
+                                    startTime = originalDateFormatter.string(from: startTime)
+                                    let name = (dts as AnyObject).object(forKey: "name") as! String
+                                    print(name)
+                                }
+                            }
+                        }
+//                        var testDict = resultDict.object(forKey: "107173749306996") as! NSDictionary
+//                        //print(result as Any)
+//                        var data = testDict.object(forKey: "data") as! NSArray
+//                        let name = (data.object(at: 0) as AnyObject).object(forKey: "name") as! String
+//                        print(name)
                     }
                 })
                 

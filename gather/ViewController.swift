@@ -62,6 +62,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
     func testLoginFunction(){
         let button = FBSDKLoginButton()
         button.readPermissions = ["public_profile", "email", "user_friends"]
