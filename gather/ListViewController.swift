@@ -38,8 +38,13 @@ class ListViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "eventTableViewCell", for: indexPath) as! EventTableViewCell
         let event = events[indexPath.row]
         cell.textLabel?.text = event.name ?? "no name found"
-        
-        cell.detailTextLabel?.text = "\(event.date)"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss-SSSS"
+        let startTime = formatter.string(from: event.startTime!)
+        let date = formatter.date(from: startTime)
+        formatter.dateFormat = "MMM dd,yyyy - 'Start Time-' HH:mm"
+        let actualStartTime = formatter.string(from: date!)
+        cell.detailTextLabel?.text = "\(actualStartTime)"
         
         return cell
     }

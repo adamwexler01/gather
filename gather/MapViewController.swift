@@ -118,7 +118,6 @@ struct Event: Unboxable {
     let date: Date?
     let description: String?
     let place: Place
-
     init(unboxer: Unboxer) throws {
 
         place = try unboxer.unbox(key: "place")
