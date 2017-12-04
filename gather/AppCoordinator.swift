@@ -12,35 +12,58 @@ import FBSDKLoginKit
 import FBSDKShareKit
 import FBSDKCoreKit
 
-
 class AppCoordinator: NSObject {
     
-    private let window: UIWindow
+    lazy var authViewController: ViewController = ViewController(delegate: self)
+    lazy var mapViewController: MapViewController = MapViewController(delegate: self)
+    lazy var listViewController: ListViewController = ListViewController()
+
+    fileprivate let navigationController: UINavigationController
+    fileprivate let store: Store
     
-    init(window: UIWindow) {
-        self.window = window
+    init(navigationController: UINavigationController, store: Store) {
+        self.navigationController = navigationController
+        self.store = store
         super.init()
+    }
+    
+    var events: [Event] = [] {
+        didSet {
+            mapViewController.events = events
+            listViewController.events = events
+        }
     }
     
     func start() {
         print(FBSDKAccessToken.current())
         print(FBSDKAccessToken.current()?.tokenString)
         if FBSDKAccessToken.current() != nil {
+            updateEvents()
             presentMapFlow()
         } else {
+            events = []
             presentAuthFlow()
         }
     }
     
+    func updateEvents() {
+        store.getEvents { events in
+            let currentDate = Date()
+            let filteredEvents = events.filter { $0.startTime?.compare(currentDate) == .orderedDescending }
+            self.events = filteredEvents
+        }
+    }
+    
+    
     func presentAuthFlow() {
-        let controller = ViewController(delegate: self)
-        window.rootViewController = controller
+        navigationController.setViewControllers([authViewController], animated: false)
+        navigationController.isNavigationBarHidden = true
+        
     }
     
     func presentMapFlow() {
-        let controller = MapViewController(delegate: self)
-        let navController = UINavigationController(rootViewController: controller)
-        window.rootViewController = navController
+        navigationController.setViewControllers([mapViewController], animated: false)
+        navigationController.isNavigationBarHidden = false
     }
     
     func presentError(in controller: UIViewController) {
@@ -50,14 +73,17 @@ class AppCoordinator: NSObject {
         controller.present(alertController, animated: true, completion: nil)
     }
     
-    
-    
 }
 
 extension AppCoordinator: MapViewControllerDelegate {
+
     func controllerDidPressLogoutButton(_ controller: MapViewController) {
         FBSDKAccessToken.setCurrent(nil)
         start()
+    }
+    
+    func controller(_ controller: MapViewController, didPressListButtonWith events: [Event]) {
+        navigationController.pushViewController(listViewController, animated: true)
     }
 }
 
@@ -68,13 +94,11 @@ extension AppCoordinator: ViewControllerDelegate {
         if let error = error {
             presentError(in: controller)
         } else if let result = result {
-            
             if result.token != nil {
-                presentMapFlow()
+                start()
             } else {
                 presentError(in: controller)
             }
-            
         } else {
             print("idk")
         }

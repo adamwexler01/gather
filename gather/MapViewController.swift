@@ -16,11 +16,18 @@ import Unbox
 
 protocol MapViewControllerDelegate: class {
     func controllerDidPressLogoutButton(_ controller: MapViewController)
+    func controller(_ controller: MapViewController, didPressListButtonWith events: [Event])
 }
 
 class MapViewController: UIViewController {
     
     public weak var delegate: MapViewControllerDelegate?
+    var events: [Event] = [] {
+        didSet {
+            updateEvents(events)
+        }
+    }
+
     
     let camera = GMSCameraPosition.camera(withLatitude: 29.6516, longitude: -82.3248, zoom: 12.5)
     lazy var mapView: GMSMapView = GMSMapView.map(withFrame: CGRect.zero, camera: self.camera)
@@ -38,12 +45,11 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         
         let logoutButton = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(didPressLogoutButton(_:)))
+        let toggleButton = UIBarButtonItem(title: "List", style: .plain, target: self, action: #selector(didPressListButton(_:)))
         
         navigationItem.rightBarButtonItem = logoutButton
+        navigationItem.leftBarButtonItem = toggleButton
         
-        referenceFBData()
-        let mapData = getLocationIDs()
-        print(mapData)
         self.view = mapView
     }
     
@@ -57,98 +63,17 @@ class MapViewController: UIViewController {
         delegate?.controllerDidPressLogoutButton(self)
     }
     
-    func referenceFBData(){
-        let request = FBSDKGraphRequest(graphPath:"me", parameters: ["fields":"email,first_name,gender"]);
-        
-        request?.start(completionHandler: { (connection, result, error) in
-            if(error != nil){
-                print("This is the seen error: \(String(describing: error))")
-            } else {
-                print("This is the result that you are looking for: \(String(describing: result))")
-            }
-        })
-    }
-    func getLocationIDs() {
-        
-        FBSDKGraphRequest(graphPath: "/search", parameters: ["pretty": "0", "type": "place", "center": "29.651634,-82.324829", "distance": "45000", "limit": "100", "fields": "id"], httpMethod: "GET").start(completionHandler: { [weak self] (connection, result, error) -> Void in
-            guard let `self` = self else { return }
-            
-            if let error = error {
-                self.handleError(error)
-            } else {
-                //print(result)
-                let placeDict = result as! NSDictionary
-                let placeIDs = placeDict.object(forKey: "data") as! NSArray
-                var ids = [String]()
-                var count = 0
-                for singleDictEntry in placeIDs{
-                    if(count < 49){
-                        ids.append((singleDictEntry as AnyObject).object(forKey: "id") as! String)
-                        count += 1
-                    } else{
-                        break
-                    }
-                }
-                let stringIDs = ids.joined(separator: ", ")
-                var parametersForPlaces = [String: Any]()
-                parametersForPlaces["ids"] = stringIDs
-                
-                self.getEvents(parameters: parametersForPlaces)
-            }
-        })
+    func didPressListButton(_ sender: UIBarButtonItem){
+        delegate?.controller(self, didPressListButtonWith: events)
     }
     
-    func getEvents(parameters: [String: Any]) {
 
-        FBSDKGraphRequest(graphPath: "/events", parameters: parameters, httpMethod: "GET").start(completionHandler: { [weak self] (connection, result, error) -> Void in
-            
-            guard let `self` = self else { return }
-            
-            if let error = error {
-                
-                DispatchQueue.main.async { [weak self] in
-                    guard let `self` = self else { return }
-                    self.handleError(error)
-                }
-
-                return
-            }
-            
-            guard let resultDict = result as? UnboxableDictionary else {
-                return
-            }
-            
-            let eventsArrays = resultDict.map { (arg) -> [Event] in
-                let (_, value) = arg
-                let placeDict = value as? [String: Any] ?? [:]
-                let eventDicts = placeDict["data"] as? [[String: Any]]
-                let events: [Event]? = try? unbox(dictionaries: eventDicts ?? [])
-                return events ?? []
-            }
-            
-            let events = eventsArrays.flatMap { $0 }
-            
-            
-            
-            
-            DispatchQueue.main.async { [weak self] in
-                guard let `self` = self else { return }
-                self.handleResponse(events)
-            }
-        })
-    }
     
-    func handleResponse(_ events: [Event]) {
+    func updateEvents(_ events: [Event]) {
         
-        let currentDate = Date()
-//        let events = response.events
-//
-//        print(events)
+        mapView.clear()
         
-        let filteredEvents = events.filter { $0.startTime?.compare(currentDate) == .orderedDescending }
-        
-        
-        for event in filteredEvents {
+        for event in events {
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: event.place.location.latitude, longitude: event.place.location.longitude)
             marker.title = event.name

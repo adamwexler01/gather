@@ -17,7 +17,9 @@ import GoogleMaps
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let appWindow = UIWindow(frame: UIScreen.main.bounds)
-    lazy var appCoordinator: AppCoordinator = AppCoordinator(window: self.appWindow)
+    let appNavigationController = UINavigationController()
+    let store = Store()
+    lazy var appCoordinator: AppCoordinator = AppCoordinator(navigationController: self.appNavigationController, store: self.store)
 
 
     var window: UIWindow?
@@ -28,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
+        appWindow.rootViewController = appNavigationController
         appWindow.makeKeyAndVisible()
         window = appWindow
         

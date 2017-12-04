@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		51B537531FB1471100C293BE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B537521FB1471100C293BE /* MapViewController.swift */; };
 		51B537551FB2298600C293BE /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B537541FB2298600C293BE /* AppCoordinator.swift */; };
+		51CB74251FD4BF8900D3F59B /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB74241FD4BF8900D3F59B /* ListViewController.swift */; };
+		51CB74271FD4D2EE00D3F59B /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB74261FD4D2EE00D3F59B /* EventTableViewCell.swift */; };
+		51CB74291FD4D65900D3F59B /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB74281FD4D65900D3F59B /* Store.swift */; };
 		51DA2AC21F7964BE001B0D86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DA2AC11F7964BE001B0D86 /* AppDelegate.swift */; };
 		51DA2AC41F7964BE001B0D86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DA2AC31F7964BE001B0D86 /* ViewController.swift */; };
 		51DA2ACA1F7964BE001B0D86 /* gather.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 51DA2AC81F7964BE001B0D86 /* gather.xcdatamodeld */; };
@@ -46,6 +49,9 @@
 		306849024EC76579810D3A10 /* Pods_gatherTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_gatherTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		51B537521FB1471100C293BE /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		51B537541FB2298600C293BE /* AppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		51CB74241FD4BF8900D3F59B /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		51CB74261FD4D2EE00D3F59B /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
+		51CB74281FD4D65900D3F59B /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		51DA2ABE1F7964BE001B0D86 /* gather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51DA2AC11F7964BE001B0D86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		51DA2AC31F7964BE001B0D86 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -145,13 +151,16 @@
 			isa = PBXGroup;
 			children = (
 				51B537521FB1471100C293BE /* MapViewController.swift */,
+				51CB74281FD4D65900D3F59B /* Store.swift */,
 				51DA2AC11F7964BE001B0D86 /* AppDelegate.swift */,
-				51B537541FB2298600C293BE /* AppCoordinator.swift */,
 				51DA2AC31F7964BE001B0D86 /* ViewController.swift */,
+				51CB74261FD4D2EE00D3F59B /* EventTableViewCell.swift */,
+				51B537541FB2298600C293BE /* AppCoordinator.swift */,
 				51DA2ACB1F7964BE001B0D86 /* Assets.xcassets */,
 				51DA2ACD1F7964BE001B0D86 /* LaunchScreen.storyboard */,
 				51DA2AD01F7964BE001B0D86 /* Info.plist */,
 				51DA2AC81F7964BE001B0D86 /* gather.xcdatamodeld */,
+				51CB74241FD4BF8900D3F59B /* ListViewController.swift */,
 			);
 			path = gather;
 			sourceTree = "<group>";
@@ -264,7 +273,7 @@
 				TargetAttributes = {
 					51DA2ABD1F7964BE001B0D86 = {
 						CreatedOnToolsVersion = 8.3;
-						DevelopmentTeam = CQ38NKL4MF;
+						DevelopmentTeam = 4XDV86TPTB;
 						ProvisioningStyle = Automatic;
 					};
 					51DA2AD41F7964BE001B0D86 = {
@@ -498,7 +507,10 @@
 			files = (
 				51DA2AC41F7964BE001B0D86 /* ViewController.swift in Sources */,
 				51DA2AC21F7964BE001B0D86 /* AppDelegate.swift in Sources */,
+				51CB74251FD4BF8900D3F59B /* ListViewController.swift in Sources */,
+				51CB74291FD4D65900D3F59B /* Store.swift in Sources */,
 				51B537551FB2298600C293BE /* AppCoordinator.swift in Sources */,
+				51CB74271FD4D2EE00D3F59B /* EventTableViewCell.swift in Sources */,
 				51DA2ACA1F7964BE001B0D86 /* gather.xcdatamodeld in Sources */,
 				51B537531FB1471100C293BE /* MapViewController.swift in Sources */,
 			);
@@ -648,7 +660,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = CQ38NKL4MF;
+				DEVELOPMENT_TEAM = 4XDV86TPTB;
 				INFOPLIST_FILE = gather/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -665,7 +677,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = CQ38NKL4MF;
+				DEVELOPMENT_TEAM = 4XDV86TPTB;
 				INFOPLIST_FILE = gather/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
